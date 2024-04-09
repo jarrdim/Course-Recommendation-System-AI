@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>COURSE RECOMMENDER</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+    <link href="static/assets/css/style.css" rel="stylesheet" />
+
+    <style>
+      /* Reset some default margin and padding */
+      body,
+      h1,
+      h2,
+      h3,
+      p,
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+      }
+
+      .course-card {
+        width: calc(50% - 40px);
+        margin: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(248, 179, 179, 0.1);
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+      }
+
+      .course-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .course-details {
+        padding: 15px;
+      }
+
+      .course-details h2 {
+        margin-top: 2;
+      }
+      .recommendation-form {
+        background-color: rosybrown;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.8s ease-out;
+        width: 500px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        text-align: center;
+        color: white;
+      }
+
+      label {
+        display: block;
+        margin: 10px 0;
+        color: white;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      /* Popup Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: white;
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 10px;
+        width: 80%;
+        text-align: center;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close:hover {
+        color: rosybrown;
+      }
+      /* Apply a background image and set its size */
+      body {
+        background-color: white;
+        background-size: cover;
+        /* Add other background properties if required */
+      }
+
+      /* Center the container and set a black background color */
+      .container {
+        text-align: center;
+        background-color: white;
+        padding: 20px;
+      }
+
+      /* Style the recommendation form */
+      .recommendation-form {
+        background-color: rosybrown;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px black; /* Change box shadow color to purple */
+        margin: 0 auto; /* Center the form */
+        width: 60%; /* Reduce width of the form */
+        animation: fadeIn 1s; /* Add fadeIn animation */
+      }
+
+      /* Change heading color to purple */
+      .recommendation-form h2 {
+        color: black;
+      }
+
+      /* Change submit button color to purple */
+      .recommendation-form button {
+        background-color: black;
+        color: white;
+        transition: background-color 0.5s; /* Add transition for smooth color change */
+      }
+
+      .recommendation-form button:hover {
+        background-color: #0a2c7c; /* Change hover color to green */
+      }
+
+      /* Animation for the form */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Style the modal */
+      .modal-content {
+        background-color: rosybrown;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px black; /* Change box shadow color to purple */
+      }
+
+      /* Style the footer */
+      footer {
+        text-align: center;
+        background-color: rosybrown;
+        color: white;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- navigation bar-->
+    <nav class="topnav">
+      <a href="/">Home</a>
+      <a href="course">Courses</a>
+      <a href="recommentcourses">Recommend Course</a>
+     
+    </nav>
+    <div class="container">
+      <h1>RECOMMEND COURSES</h1>
+    </div>
+
+    <div class="recommendation-form">
+      <h1 style="text-align: center">Course Recommendation Form</h1>
+
+      <form action="{{ ('submit') }}" method="post" id="recommendationForm">
+        <label for="full_name">Full Name:</label>
+        <input
+          type="text"
+          id="full_name"
+          name="full_name"
+          required
+        /><br /><br />
+
+        <label for="hobbies">Hobbies:</label>
+        <input type="text" id="hobbies" name="hobbies" required /><br /><br />
+
+        <label for="passion">Passion for Job:</label>
+        <input type="text" id="passion" name="passion" required /><br /><br />
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("subjectCheckboxes")
+        .addEventListener("change", updateGrades);
+
+      function updateGrades() {
+        const checkboxes = document.querySelectorAll(
+          'input[name="selectedSubjects"]:checked'
+        );
+        const gradesContainer = document.getElementById("gradesContainer");
+
+        // Clear previous grades
+        gradesContainer.innerHTML = "";
+
+        // Display grade inputs for selected subjects
+        checkboxes.forEach((checkbox) => {
+          const subjectName = checkbox.value;
+
+          // Create a label for the subject
+          const label = document.createElement("label");
+          label.textContent = `Grade for ${subjectName}:`;
+
+          // Create a dropdown menu for grades
+          const select = document.createElement("select");
+          select.setAttribute("name", `${subjectName}Grade`);
+          select.required = true;
+
+          const gradeOptions = [
+            "A",
+            "A-",
+            "B+",
+            "B",
+            "B-",
+            "C+",
+            "C",
+            "C-",
+            "D+",
+            "D",
+            "D-",
+            "E",
+            "N/A",
+          ];
+          for (const grade of gradeOptions) {
+            const option = document.createElement("option");
+            option.value = grade;
+            option.textContent = grade;
+            select.appendChild(option);
+          }
+
+          // Append the label and dropdown to the grades container
+          gradesContainer.appendChild(label);
+          gradesContainer.appendChild(select);
+        });
+      }
+      function showRecommendation(event) {
+        event.preventDefault();
+
+        // Replace the following line with your actual recommendation logic
+        const recommendedCourse = "Computer Science";
+
+        // Display the modal with the recommended course
+        document.getElementById("recommendedCourse").innerText =
+          recommendedCourse;
+        document.getElementById("myModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+      }
+
+      // Close modal if user clicks outside the modal content
+      window.onclick = function (event) {
+        const modal = document.getElementById("myModal");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      function exploreCourses() {
+        // Replace the URL with the actual URL of the "Explore Courses" page for Computer Science
+        window.location.href = "explore_courses_computer_science.html";
+      }
+    </script>
+
+    <footer style="margin-bottom: 1%; margin-top: 5%">
+      <small>
+        Copyright © 2024 Course Recommendation System. All Rights Reserved.
+      </small>
+    </footer>
+  </body>
+</html>

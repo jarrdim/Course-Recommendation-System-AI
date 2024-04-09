@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recommended Courses</title>
+    <link rel="stylesheet" href="static/Assets/css/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .back-link a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-link a:hover {
+        background-color: #0056b3;
+      }
+      body {
+        background-image: url("static/assets/img/portfolio/istockphoto-1366428092-170667a.webp");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="/">Home</a>
+      <a href="course">Courses</a>
+      <a class="active" href="recommentcourses">Recommend Course</a>
+      <a href="job">Job Market</a> <a class="con" href="contact">Contact Us</a>
+      <a href="details">User Detais</a>
+    </nav>
+
+    <div class="container">
+      <h1>Recommended Courses based on {{ selected_course }}</h1>
+      <ul>
+        {% for course in recommended_courses %}
+        <li><span style="color: blue">[+]</span> {{ course }}</li>
+        {% endfor %}
+      </ul>
+
+      <div class="back-link">
+        <a href="/recommentcourses">BACK</a>
+      </div>
+    </div>
+  </body>
+</html>

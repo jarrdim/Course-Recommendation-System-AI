@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Recommendation</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="static/Assets/css/style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      .slideshow-container {
+        position: absolute;
+      }
+      .dot {
+        height: 15px;
+        width: 15px;
+        background-color: steelblue;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .activee {
+        background-color: #717171;
+      }
+      .fade {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+      }
+
+      @-webkit-keyframes fade {
+        from {
+          opacity: 0.4;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      img {
+        border-radius: 30px 30px 200px 200px;
+      }
+      .mySlides img {
+        width: 168%;
+      }
+    </style>
+  </head>
+  <body background="static/assets/img/portfolio/portfolio-1.jpg">
+    <nav class="topnav">
+      <a class="active" href="/">Home</a>
+      <a href="course">Courses</a>
+      <a href="recommentcourses">Recommend Courses</a>
+    
+      <a class="con" href="contact">Contact Us</a>
+
+      {% if username %}
+      <a style="font-size: 18px; font-weight: bold">Welcome, {{ username }}</a>
+      <a class="con" href="logout">Logout</a>
+      {% else %}
+
+      <a href="details">User Detais</a>
+      {% endif %}
+    </nav>
+    <div class="container">
+      <h1>COURSE RECOMMENDER</h1>
+    </div>
+
+    <!-- <div class="container">
+      <div class="card">
+        <h1>Course Recommendation System</h1>
+        <form action="/recommendation" method="post">
+          <label for="selected_course">Select or type a course:</label>
+          <select id="selected_course" name="selected_course" multiple>
+            {% for course in courses %}
+            <option value="{{ course }}">{{ course }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Show Recommended Courses</button>
+        </form>
+      </div>
+    </div> -->
+
+    <!-- slideshow -->
+    <div class="container con" style="margin-left: 20%; width: max-content">
+      <div class="slideshow-container">
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-1.jpg" />
+        </div>
+
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-2.jpg" />
+        </div>
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-3.jpg" />
+        </div>
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-4.jpg" />
+        </div>
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-5.jpg" />
+        </div>
+        <div class="mySlides fade">
+          <img src="static/assets/img/portfolio/portfolio-6.jpg" />
+        </div>
+      </div>
+      <div style="text-align: center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <!--javascript code for slideshow -->
+      <script>
+        var slideIndex = 0;
+        showSlides();
+        function showSlides() {
+          var i;
+          var slides = document.getElementsByClassName("mySlides"); //defining
+          var dots = document.getElementsByClassName("dot"); //defining
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {
+            slideIndex = 1;
+          }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" activee", "");
+          }
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].className += " activee";
+          setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+      </script>
+    </div>
+
+    <!-- service section -->
+    <section class="services">
+      <div class="icon-box icon-box-green">
+        <div class="icon"><i class="bx bx-tachometer"></i></div>
+        <h4>
+          <a href="recommentcourses"><b>RECOMMEND COURSE</b></a>
+        </h4>
+        <p><i>Discover your career path with us.</i></p>
+      </div>
+
+      <div class="icon-box icon-box-blue">
+        <div class="icon"><i class="bx bx-tachometer"></i></div>
+        <h4>
+          <a href="course"><b>EXPLORE COURSES</b></a>
+        </h4>
+        <p><i>Click here to view different courses</i></p>
+      </div>
+
+      <div class="icon-box icon-box-cyan">
+        <div class="icon"><i class="bx bx-tachometer"></i></div>
+        <h4>
+          <a href="job"><b>JOB MARKET</b></a>
+        </h4>
+        <p><i>Click here to view current trending jobs.</i></p>
+      </div>
+    </section>
+
+    <footer style="margin-top: 23%">
+      <small>
+        Copyright © 2024 Course Recommendation System. All Rights Reserved.
+      </small>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#selected_course").select2({
+          placeholder: "Type or select a course",
+          allowClear: true,
+          tags: true,
+        });
+      });
+    </script>
+  </body>
+</html>
